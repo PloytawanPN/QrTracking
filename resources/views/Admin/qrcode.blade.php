@@ -12,6 +12,37 @@
     @livewire('admin.qrcode-list')
 @endsection
 @section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('confirmCreate').addEventListener('click', function () {
+            const qrCodeQuantity = document.getElementById('qrCodeQuantity').value;
+
+            // Check if the input is empty
+            if (!qrCodeQuantity) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Please enter the number of QR Codes.',
+                });
+                return; // Stop the execution
+            }
+
+            // Confirm dialog using SweetAlert2
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `You are about to create ${qrCodeQuantity} QR Code(s).`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, create it!',
+                cancelButtonText: 'No, cancel!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('create-qrcode-bt').click();
+                }
+            });
+        });
+    });
+</script>
 <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
 <script src="{{ asset('assets/js/app.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/jquery.dataTables.min.js') }}"></script>
